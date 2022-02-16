@@ -124,7 +124,7 @@ const sampleData = [{
   },
 },
 {
-  sender: "You",
+  sender: "User",
   timestamp: formatDate(new Date()),
   type: "text",
   isMe: true,

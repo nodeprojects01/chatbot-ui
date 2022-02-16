@@ -15,6 +15,17 @@ function formatDate(date) {
 }
 
 function ChatWindow(props) {
+	function handleUserMessage(msg) {
+		props.handleUserResponse({
+			sender: "User",
+			timestamp: formatDate(new Date()),
+			type: "text",
+			isMe: true,
+			data: {
+				text: msg
+			},
+		});
+	}
 
 	function handleButtonClick(data) {
 		switch (data.action) {
@@ -22,34 +33,11 @@ function ChatWindow(props) {
 				window.open(data.url, "_blank")
 				break;
 			case "quickreply":
-				props.handleUserResponse({
-					sender: "You",
-					timestamp: formatDate(new Date()),
-					type: "text",
-					isMe: true,
-					data: {
-						text: data.response
-					},
-				})
-
+				handleUserMessage(data.response);
 				break;
 			default:
 				break
 		}
-	}
-
-	function handleSubmit(e) {
-		if (!e) return;
-
-		props.handleUserResponse({
-			sender: "You",
-			timestamp: formatDate(new Date()),
-			type: "text",
-			isMe: true,
-			data: {
-				text: e
-			},
-		});
 	}
 
 	return (
@@ -62,7 +50,7 @@ function ChatWindow(props) {
 							handleMinizeClick={() => props.minimizeWindow()}
 							handleCloseClick={() => props.closeConversation()} />
 						<Conversation messageData={props.chatHistory} handleButtonClick={handleButtonClick} />
-						<Footer handleSubmit={(e) => { handleSubmit(e) }} />
+						<Footer handleSubmit={(e) => { handleUserMessage(e) }} />
 					</section>
 			}
 		</>
