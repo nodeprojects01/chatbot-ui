@@ -1,20 +1,20 @@
 import React from 'react';
 import QuickReply from "../chatResponseFormats/QuickReply";
-import MessageBox from "../chatWindow/MessageBox";
+import MessageBubble from "../chatWindow/MessageBubble";
 
 function Conversation(props) {
     return (
         <main className="messenger-chat" >
             <div id="printme">
                 {
-                    props.messageData && props.messageData.map((msg, index) => {
-                        if (msg.type === "quickreplies") {
+                    props.messageData && props.messageData.map((msgObj, index) => {
+                        if (msgObj.type === "quickreplies") {
                             return <div key={`message${new Date().getTime()}${index}`}>
-                                {QuickReply(msg, props.handleButtonClick, index)}
+                                <QuickReply handleButtonClick={(data) => props.handleButtonClick(data)} options={msgObj} />
                             </div>
                         }
                         return <div key={`message${new Date().getTime()}${index}`}>
-                            {<MessageBox text={msg} />}
+                            {<MessageBubble params={msgObj} />}
                         </div>
                     })
                 }

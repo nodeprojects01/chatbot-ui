@@ -24,7 +24,7 @@ body {
   align-items: center; */
   /* height: 100vh; */
   /* background-image: var(--body-bg); */
-  font-family: Helvetica, sans-serif;
+  font-family: 'calibri', serif, sans-serif;
 }
 
 .kc_fab_main_btn{
@@ -93,6 +93,8 @@ body {
   border-bottom: var(--border);
   background: var(--right-chat-bg);
   color: white;
+  border-radius: 9px 9px 0 0;
+  font-size: 18px;
 }
 
 .messenger-chat {
@@ -152,6 +154,7 @@ body {
 .left-chat .chat-bubble {
   border-bottom-left-radius: 0;
   width: 90%;
+  /* box-shadow: grey -1px 1px 10px; */
 }
 
 .right-chat {
@@ -163,6 +166,7 @@ body {
   border-bottom-right-radius: 0;
   width: 90%;
   float: right;
+  /* box-shadow: grey -1px 1px 10px; */
 }
 .right-chat .chat-img {
   margin: 0 0 0 10px;
@@ -270,6 +274,8 @@ img {
     background-color: var(--left-chat-bg);
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-family: 'calibri', serif, sans-serif;
+  font-size: 0.94em;
 }
 
 .quickReplyBox{

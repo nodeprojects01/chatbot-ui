@@ -1,13 +1,18 @@
-
-
+import React, { useState } from 'react';
 
 function Footer(props) {
+    const [userMessage, setUserMessage] = useState("");
+
+    function handleInputChange(e) {
+        if (e.target.value)
+            setUserMessage(e.target.value);
+    }
+    console.log("msg-", userMessage);
     return (
-        <form className="messenger-inputarea" onSubmit={() => props.handleSubmit}>
-            <input type="text" value={props.userMessage} onChange={() => props.handleInputChange}
-                className="messenger-input"
-                placeholder="Enter your message..." />
-            <button type="submit" className="messenger-send-btn">Send</button>
+        <form className="messenger-inputarea" onSubmit={(e) => { e.preventDefault(); props.handleSubmit(userMessage); }}>
+            <input type="text" value={props.userMessage} onChange={(e) => handleInputChange(e)}
+                className="messenger-input" placeholder="Enter your message..." />
+            <button className="messenger-send-btn">Send</button>
         </form>
     );
 }

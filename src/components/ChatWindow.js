@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 import ChatTheme from './ChatTheme';
-import PropTypes from 'prop-types'
 
 import Header from "./chatWindow/Header";
 import Conversation from "./chatWindow/Conversation";
@@ -16,12 +15,6 @@ function formatDate(date) {
 }
 
 function ChatWindow(props) {
-	const [userMessage, setUserMessage] = useState("");
-
-	function handleInputChange(event) {
-		if (!event.target.value) return
-		setUserMessage(event.target.value)
-	}
 
 	function handleButtonClick(data) {
 		switch (data.action) {
@@ -45,10 +38,8 @@ function ChatWindow(props) {
 		}
 	}
 
-	function handleSubmit(event) {
-		event.preventDefault();
-		const msgText = userMessage;
-		if (!msgText) return;
+	function handleSubmit(e) {
+		if (!e) return;
 
 		props.handleUserResponse({
 			sender: "You",
@@ -56,10 +47,9 @@ function ChatWindow(props) {
 			type: "text",
 			isMe: true,
 			data: {
-				text: msgText
+				text: e
 			},
 		});
-		setUserMessage("")
 	}
 
 	return (
@@ -72,7 +62,7 @@ function ChatWindow(props) {
 							handleMinizeClick={() => props.minimizeWindow()}
 							handleCloseClick={() => props.closeConversation()} />
 						<Conversation messageData={props.chatHistory} handleButtonClick={handleButtonClick} />
-						<Footer handleSubmit={handleSubmit} handleInputChange={handleInputChange} />
+						<Footer handleSubmit={(e) => { handleSubmit(e) }} />
 					</section>
 			}
 		</>

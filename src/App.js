@@ -14,7 +14,7 @@ function App() {
         console.log("loading chat history if any");
         setIsConnected(true);   // fetch the conversation data from the database, set true if success else false
         setChatHistory(sampleData);   // set the conversation data
-      }, 3000);
+      }, 500);
     }
   }, [openChatWindow]);
 
@@ -25,9 +25,7 @@ function App() {
 
   function appendMessage(message) {
     console.log("appending message to chathistory");
-    setChatHistory(oldData => [...oldData.map((_item) => {
-      return _item.sender !== "Bot" ? { ..._item, ...{ isRead: true } } : _item
-    }), message]);
+    setChatHistory(oldData => [...oldData, message]);
   }
 
   function handleChatIconClick() {
@@ -130,7 +128,6 @@ const sampleData = [{
   timestamp: formatDate(new Date()),
   type: "text",
   isMe: true,
-  isRead: true,
   data: {
     text: "I need help"
   },
