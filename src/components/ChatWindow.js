@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../App.css';
 import ChatTheme from './ChatTheme';
 
@@ -17,7 +17,7 @@ function formatDate(date) {
 function ChatWindow(props) {
 	function handleUserMessage(msg) {
 		props.handleUserResponse({
-			sender: "User",
+			sender: "Me",
 			timestamp: formatDate(new Date()),
 			type: "text",
 			isMe: true,
@@ -40,6 +40,13 @@ function ChatWindow(props) {
 		}
 	}
 
+	
+    const el = useRef();
+	useEffect(() => {
+		if (props.isConnected)
+			el.current.scrollIntoView({ behavior: 'smooth' });
+	});
+
 	return (
 		<>
 			{ChatTheme(props.theme, props.windowSize)}
@@ -50,6 +57,7 @@ function ChatWindow(props) {
 							handleMinizeClick={() => props.minimizeWindow()}
 							handleCloseClick={() => props.closeConversation()} />
 						<Conversation messageData={props.chatHistory} handleButtonClick={handleButtonClick} />
+            			<div ref={el} />
 						<Footer handleSubmit={(e) => { handleUserMessage(e) }} />
 					</section>
 			}

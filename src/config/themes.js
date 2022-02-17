@@ -12,12 +12,12 @@ export const themes = {
 	blue: `
 		--body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 		--messenger-bg: #fff;
-		--border: 2px solid #dedcdc;
+		--border: 2px solid #f1f1f2;
 		--border-radius: 10px;
-		--left-chat-bg: #dedcdc;
-		--right-chat-bg: #579ffb;
-		--left-chat-border: #dedcdc;
-		--chatwindowheight: 650px;
+		--left-chat-bg: #f1f1f2;
+		--right-chat-bg: #002d58;
+		--left-chat-border: #f1f1f2;
+		--chatwindowheight: 500px;
 	`,
 	brown: `
 		--body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
