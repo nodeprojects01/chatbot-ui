@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import ChatWindow from './components/ChatWindow'
 import ChatIcon from "./components/ChatIcon";
-import { sampleData, botResponses } from "./dataProvider/sampleData";
-const genericFunction = require("./utils/genericFunction");
+import { botWelcomeMessage, conversations, generateBotResponse } from "./dataProvider/sampleData";
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
@@ -15,14 +14,14 @@ function App() {
       setTimeout(function () {
         console.log("loading chat history if any");
         setIsConnected(true);   // fetch the conversation data from the database, set true if success else false
-        setChatHistory(sampleData);   // set the conversation data
+        setChatHistory(botWelcomeMessage);   // set the conversation data
       }, 500);
     }
   }, [openChatWindow]);
 
   function handleUserMessage(userResponse) {
     appendMessage(userResponse);
-    botResponse();
+    botResponse(userResponse.data.text);
   }
 
   function appendMessage(message) {
@@ -34,21 +33,12 @@ function App() {
     setOpenChatWindow(!openChatWindow);
   }
 
-  function botResponse() {
-    const r = genericFunction.generateRandomNo(0, botResponses.length - 1);
-    const msgText = botResponses[r];
-    const delay = msgText.split(" ").length * 100;
+  function botResponse(userMsg) {
+    const botResp = generateBotResponse(conversations[userMsg]);
+    const delay = botResp.data.text.split(" ").length * 100;
 
     setTimeout(() => {
-      appendMessage({
-        sender: "Bot",
-        timestamp: genericFunction.formatDate(new Date()),
-        type: "text",
-        isMe: false,
-        data: {
-          text: msgText
-        },
-      });
+      appendMessage(botResp);
     }, delay);
   }
 

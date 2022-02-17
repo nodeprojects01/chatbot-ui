@@ -19,8 +19,7 @@ function ChatWindow(props) {
 		props.handleUserResponse({
 			sender: "Me",
 			timestamp: formatDate(new Date()),
-			type: "text",
-			isMe: true,
+			type: "plainText",
 			data: {
 				text: msg
 			},
@@ -29,17 +28,16 @@ function ChatWindow(props) {
 
 	function handleButtonClick(data) {
 		switch (data.action) {
-			case "link":
-				window.open(data.url, "_blank")
+			case "hyperLink":
+				window.open(data.link, "_blank")
 				break;
-			case "quickreply":
+			case "quickReply":
 				handleUserMessage(data.response);
 				break;
 			default:
 				break
 		}
 	}
-
 	
     const el = useRef();
 	useEffect(() => {

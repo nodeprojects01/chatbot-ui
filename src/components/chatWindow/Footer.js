@@ -7,12 +7,15 @@ function Footer(props) {
         if (e.target.value)
             setUserMessage(e.target.value);
     }
-    
+
     return (
-        <form className="messenger-inputarea" onSubmit={(e) => { e.preventDefault(); if (userMessage) props.handleSubmit(userMessage); }}>
-            <input type="text" value={props.userMessage} onChange={(e) => handleInputChange(e)}
+        <form className="messenger-inputarea" onSubmit={(e) => {
+            e.preventDefault();
+            if (userMessage) props.handleSubmit(userMessage); setUserMessage(""); console.log("after submit");
+        }}>
+            <input type="text" value={userMessage} onChange={(e) => handleInputChange(e)}
                 className="messenger-input" placeholder="Enter your message..." />
-            <button className="messenger-send-btn">Send</button>
+            <div className="messenger-send-btn">Send</div>
         </form>
     );
 }

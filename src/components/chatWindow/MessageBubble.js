@@ -5,7 +5,7 @@ import PlainText from "../chatResponseFormats/PlainText";
 // <img src={UserIcon} style={{ width: "20px", height: "20px" }} />
 
 function MessageBubble(props) {
-    let myClass = props.params.isMe ? "chat right-chat" : "chat left-chat";
+    let myClass = props.params.sender === "Me" ? "chat right-chat" : "chat left-chat";
     let length = props.params.data.text.split(" ").length;
     return (
         <div key={`chat${new Date().getTime() * length}`} className={myClass}>

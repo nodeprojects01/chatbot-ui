@@ -1,65 +1,94 @@
 
 const genericFunction = require("../utils/genericFunction");
 
-const botResponses = [
-    "Hi, how are you?",
-    "Ohh... I can't understand what you trying to say. Sorry!",
-    "I like to play games... But I don't know how to play!",
-    "Sorry if my answers are not relevant. :))",
-    "I feel sleepy! :("
+const sorryMessages = [
+    "Sorry, I didn't get you",
+    "Ohh... I could't understand your request. Sorry!",
+    "I'm sorry, I didn't understand that"
 ];
 
-const sampleData = [{
-    sender: "Bot",
-    timestamp: genericFunction.formatDate(new Date()),
-    type: "text",
-    isMe: false,
-    data: {
-        text: "Hi, welcome to chat window pro"
-    },
-},
-{
-    sender: "Me",
-    timestamp: genericFunction.formatDate(new Date()),
-    type: "text",
-    isMe: true,
-    data: {
-        text: "I need help"
-    },
-},
-{
-    sender: "Bot",
-    timestamp: genericFunction.formatDate(new Date()),
-    type: "quickreplies",
-    isMe: false,
-    data: {
-        text: "Sure, I can help you with below list."
-    },
-    isClicked: false,
-    quickReplies: [
-        {
-            title: 'Buy',
-            response: 'buy'
-        },
-        {
-            title: 'Sell',
-            response: 'Sell'
-        },
-        {
-            title: 'Hold',
-            response: 'I want to hold'
-        },
-        {
-            title: 'Add to cart',
-            response: 'add to cart'
-        },
-        {
-            title: 'Go to cart',
-            response: 'Go to cart'
-        },
-    ]
+const responseTypes = {
+    quickReply: "quickReply",
+    plainText: "plainText",
+    hyperLink: "hyperLink"
 }
 
+function generateBotResponse(msg) {
+    if (!msg){
+        msg = {
+            type: responseTypes.plainText,
+            text: sorryMessages[genericFunction.generateRandomNo(0, sorryMessages.length-1)]
+        }
+    }
+    return {
+        sender: "Bot",
+        timestamp: genericFunction.formatDate(new Date()),
+        type: msg.type,
+        data: {
+            text: msg.text,
+            options: msg.options ? msg.options : []
+        }
+    }
+}
+
+const conversations = {
+    "Metrics Report": {
+        type: responseTypes.quickReply,
+        text: "I found the following reports for you. Please select one to proceed.",
+        options: [
+            { title: "Quarterly Matrix Report", response: "Quarterly Matrix Report" },
+            { title: "eFile Usage Matrix", response: "eFile Usage Matrix" },
+            { title: "UPLD & DNLD Report", response: "UPLD & DNLD Report" },
+        ]
+    },
+    "eFile Usage Matrix": {
+        type: responseTypes.plainText,
+        text: "Please select the start date"
+    },
+    "1-1-2022": {
+        type: responseTypes.plainText,
+        text: "Please select the end date"
+    },
+    "31-1-2022": {
+        type: responseTypes.hyperLink,
+        text: "Here is the eFile usage matrix report generated for 1-1-2022 to 31-1-2022",
+        options: [
+            { title: "Click to Download", link: "https://filesamples.com/samples/document/csv/sample4.csv" },
+        ]
+    }
+}
+
+const botWelcomeMessage = [
+    {
+        sender: "Bot",
+        timestamp: genericFunction.formatDate(new Date()),
+        type: responseTypes.quickReply,
+        data: {
+            text: "Hi, I am Efia the chatbot assistant of DFC tool, and I can help you with the following queries",
+            options: [
+                {
+                    title: 'Metrics Report',
+                    response: 'Metrics Report'
+                },
+                {
+                    title: 'How to use DFC?',
+                    response: 'How to use DFC?'
+                },
+                {
+                    title: 'Find Document',
+                    response: 'Find Document'
+                },
+                {
+                    title: 'Manage Tool Access',
+                    response: 'Manage Tool Access'
+                },
+                {
+                    title: 'Others',
+                    response: 'Others'
+                },
+            ]
+        }
+    }
 ];
 
-module.exports = { sampleData, botResponses }
+module.exports = { botWelcomeMessage, conversations, generateBotResponse }

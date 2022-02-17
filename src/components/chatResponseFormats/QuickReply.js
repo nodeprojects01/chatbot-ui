@@ -1,13 +1,11 @@
 import React from 'react';
-import MessageBubble from '../chatWindow/MessageBubble';
 
 function QuickReply(props) {
 	return (
 		<div key={`quickReplyBox${new Date().getTime()}`} className="quickReplyBox">
-			<MessageBubble params={props.options} />
-			{!props.options.isClicked && props.options.quickReplies.map((quickBtn, index) => {
+			{!props.options.isClicked && props.options.data.options.map((quickBtn, index) => {
 				return <button key={`qucikBtn${new Date().getTime()}${index}`} className="quickreplyBtn"
-					onClick={() => { props.handleButtonClick({ ...quickBtn, ...{ action: "quickreply" } });
+					onClick={() => { props.handleButtonClick({ ...quickBtn, ...{ action: "quickReply" } });
 					}}>
 					{quickBtn.title}
 				</button>
