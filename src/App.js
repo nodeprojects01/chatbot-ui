@@ -8,18 +8,20 @@ function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   const [openChatWindow, setOpenChatWindow] = useState(false);
+	const [messageLoader, setMessageLoader] = useState(false);
 
   useEffect(() => {
     if (openChatWindow) {
       setTimeout(function () {
         console.log("loading chat history if any");
         setIsConnected(true);   // fetch the conversation data from the database, set true if success else false
-        setChatHistory(botWelcomeMessage);   // set the conversation data
+        if (chatHistory.length === 0) setChatHistory(botWelcomeMessage);   // set the conversation data
       }, 500);
     }
   }, [openChatWindow]);
 
   function handleUserMessage(userResponse) {
+    setMessageLoader(true);
     appendMessage(userResponse);
     botResponse(userResponse.data.text);
   }
@@ -34,11 +36,12 @@ function App() {
   }
 
   function botResponse(userMsg) {
-    const botResp = generateBotResponse(conversations[userMsg]);
+    const botResp = generateBotResponse(conversations[userMsg.toLowerCase()]);
     const delay = botResp.data.text.split(" ").length * 100;
 
     setTimeout(() => {
       appendMessage(botResp);
+      setMessageLoader(false);
     }, delay);
   }
 
@@ -63,6 +66,7 @@ function App() {
           minimizeWindow={handleMinimizeWindow}
           closeConversation={closeConversation}
           handleUserResponse={handleUserMessage}
+          enableMessageLoader={messageLoader}
           windowSize={"large"} />
         : <ChatIcon onClick={handleChatIconClick} />
       }

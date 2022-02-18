@@ -17,6 +17,7 @@ export const themes = {
 		--left-chat-bg: #f1f1f2;
 		--right-chat-bg: #002d58;
 		--left-chat-border: #f1f1f2;
+		--left-chat-bg-hover: #e3e4e5;
 		--chatwindowheight: 500px;
 	`,
 	brown: `

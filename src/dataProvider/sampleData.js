@@ -10,7 +10,8 @@ const sorryMessages = [
 const responseTypes = {
     quickReply: "quickReply",
     plainText: "plainText",
-    hyperLink: "hyperLink"
+    hyperLink: "hyperLink",
+    date: "date"
 }
 
 function generateBotResponse(msg) {
@@ -32,7 +33,7 @@ function generateBotResponse(msg) {
 }
 
 const conversations = {
-    "Metrics Report": {
+    "business matrix report": {
         type: responseTypes.quickReply,
         text: "I found the following reports for you. Please select one to proceed.",
         options: [
@@ -41,20 +42,35 @@ const conversations = {
             { title: "UPLD & DNLD Report", response: "UPLD & DNLD Report" },
         ]
     },
-    "eFile Usage Matrix": {
-        type: responseTypes.plainText,
+    "efile usage matrix": {
+        type: responseTypes.date,
         text: "Please select the start date"
     },
-    "1-1-2022": {
-        type: responseTypes.plainText,
+    "01-01-2022": {
+        type: responseTypes.date,
         text: "Please select the end date"
     },
-    "31-1-2022": {
+    "31-01-2022": {
         type: responseTypes.hyperLink,
         text: "Here is the eFile usage matrix report generated for 1-1-2022 to 31-1-2022",
         options: [
-            { title: "Click to Download", link: "https://filesamples.com/samples/document/csv/sample4.csv" },
+            { title: "Download the file", link: "https://filesamples.com/samples/document/csv/sample4.csv" },
         ]
+    },
+    "how to use the tool": {
+        type: responseTypes.hyperLink,
+        text: "Click the below link to navigate to eFile user guide",
+        options: [
+            { title: "Navigate me", link: "https://google.com" },
+        ]
+    },
+    "under which category do i upload my health checkup report?": {
+        type: responseTypes.plainText,
+        text: "You can upload the health reports under below category. \n\n Medical > Miscellaneous Medical Document"
+    },
+    "how to search payroll related documents of roman reigns": {
+        type: responseTypes.plainText,
+        text: "1. eFile Homepage\n\n 2. Enter the userid or username in the textbot and hit search \r\n 3. Click on Payroll"
     }
 }
 
@@ -67,8 +83,8 @@ const botWelcomeMessage = [
             text: "Hi, I am Efia the chatbot assistant of DFC tool, and I can help you with the following queries",
             options: [
                 {
-                    title: 'Metrics Report',
-                    response: 'Metrics Report'
+                    title: 'Business Matrix Report',
+                    response: 'Business Matrix Report'
                 },
                 {
                     title: 'How to use DFC?',

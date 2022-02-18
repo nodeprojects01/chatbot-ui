@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import '../App.css';
 import ChatTheme from './ChatTheme';
 
@@ -6,6 +6,7 @@ import Header from "./chatWindow/Header";
 import Conversation from "./chatWindow/Conversation";
 import Footer from "./chatWindow/Footer";
 import MainLoader from "./chatWindow/MainLoader";
+import ResponseLoader from "../images/icons/loading_dots.gif";
 
 function formatDate(date) {
 	const h = "0" + date.getHours();
@@ -15,6 +16,7 @@ function formatDate(date) {
 }
 
 function ChatWindow(props) {
+
 	function handleUserMessage(msg) {
 		props.handleUserResponse({
 			sender: "Me",
@@ -29,21 +31,18 @@ function ChatWindow(props) {
 	function handleButtonClick(data) {
 		switch (data.action) {
 			case "hyperLink":
-				window.open(data.link, "_blank")
+				if (data.link) window.open(data.link, "_blank")
 				break;
 			case "quickReply":
-				handleUserMessage(data.response);
+				if (data.response) handleUserMessage(data.response);
+				break;
+			case "date":
+				if (data.date) handleUserMessage(data.date);
 				break;
 			default:
 				break
 		}
 	}
-	
-    const el = useRef();
-	useEffect(() => {
-		if (props.isConnected)
-			el.current.scrollIntoView({ behavior: 'smooth' });
-	});
 
 	return (
 		<>
@@ -55,7 +54,8 @@ function ChatWindow(props) {
 							handleMinizeClick={() => props.minimizeWindow()}
 							handleCloseClick={() => props.closeConversation()} />
 						<Conversation messageData={props.chatHistory} handleButtonClick={handleButtonClick} />
-            			<div ref={el} />
+						{props.enableMessageLoader ? <img src={ResponseLoader} alt="loading bot response"
+							style={{ width: "50px", position: "absolute", bottom: "45px", left: "40%" }} /> : ""}
 						<Footer handleSubmit={(e) => { handleUserMessage(e) }} />
 					</section>
 			}
