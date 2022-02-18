@@ -44,7 +44,7 @@ function Conversation(props) {
                             return <div key={`message${new Date().getTime()}${index}`}>
                                 <MessageBubble params={msgObj} />
                                 <div style={{ marginBottom: "12px" }}>
-                                    <Calendar onChange={setDate} />
+                                    <Calendar calendarType="US" onChange={setDate} />
                                 </div>
                             </div>
                         }
