@@ -27,7 +27,7 @@ function App() {
   }
 
   function appendMessage(message) {
-    console.log("appending message to chathistory");
+    console.log("appending message to chathistory", message);
     setChatHistory(oldData => [...oldData, message]);
   }
 
@@ -36,9 +36,9 @@ function App() {
   }
 
   function botResponse(userMsg) {
-    const botResp = generateBotResponse(conversations[userMsg.toLowerCase()]);
-    const delay = botResp.data.text.split(" ").length * 100;
-
+    const botResp = generateBotResponse(conversations(userMsg.toLowerCase()));
+    const delay = 500;
+    
     setTimeout(() => {
       appendMessage(botResp);
       setMessageLoader(false);

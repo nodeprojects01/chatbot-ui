@@ -24,8 +24,23 @@ body {
   align-items: center; */
   /* height: 100vh; */
   /* background-image: var(--body-bg); */
-  /* font-family: 'calibri', serif, sans-serif; */
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  background:#fff;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #fff; 
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 6px lightgrey; 
+  background: lightgrey;
+} 
 
 .kc_fab_main_btn{
   background-color:var(--right-chat-bg);
@@ -88,6 +103,7 @@ body {
 .messengerMinimize{
   margin: 10px;
   cursor: pointer;
+  font-size: 15px;
 }
 
 .messenger-header {

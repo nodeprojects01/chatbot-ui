@@ -39,6 +39,9 @@ function ChatWindow(props) {
 			case "date":
 				if (data.date) handleUserMessage(data.date);
 				break;
+			case "cardCarousel":
+				if (data.date) handleUserMessage(data.response);
+				break;
 			default:
 				break
 		}
