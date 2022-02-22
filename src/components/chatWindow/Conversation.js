@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import QuickReply from "../chatResponseFormats/QuickReply";
 import Hyperlink from "../chatResponseFormats/Hyperlink";
-import MessageBubble from "../chatWindow/MessageBubble";
+import TitleText from "../chatWindow/TitleText";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment'
 import MultiLineText from '../chatResponseFormats/MultiLineText';
 import CardCarousel from '../chatResponseFormats/CardCarousel';
+import responseTypes from '../../models/responseTypes';
+import PlainText from '../chatResponseFormats/PlainText';
 
 function Conversation(props) {
     const el = useRef(null);
@@ -24,44 +26,44 @@ function Conversation(props) {
         if (value) props.handleButtonClick({ action: "date", date: moment(value).format('DD-MM-YYYY') })
     }
 
+    function generateFollowText(ft, i) {
+        switch (ft.type) {
+            case responseTypes.quickReply:
+                return i === props.messageData.length - 1 ?
+                    <QuickReply handleButtonClick={(data) => props.handleButtonClick(data)} options={ft.options} />
+                    : ""
+
+            case responseTypes.hyperLink:
+                return <Hyperlink handleButtonClick={(data) => props.handleButtonClick(data)} options={ft.options} />
+
+            case responseTypes.date:
+                return i === props.messageData.length - 1 ?
+                    <div style={{ marginBottom: "12px" }}>
+                        <Calendar calendarType="US" onChange={setDate} />
+                    </div> : ""
+
+            case responseTypes.cardCarousel:
+                return i === props.messageData.length - 1 ?
+                    <CardCarousel params={ft} handleButtonClick={(data) => props.handleButtonClick(data)} />
+                    : ""
+
+            case responseTypes.multiLine:
+                return <MultiLineText handleButtonClick={(data) => props.handleButtonClick(data)} options={ft.options} />
+
+            default:
+                return <PlainText text={ft.text} />
+        }
+    }
+
+
     return (
         <main className="messenger-chat" >
             <div id="printme">
                 {
-                    props.messageData && props.messageData.map((msgObj, index) => {
-                        if (msgObj.type === "quickReply") {
-                            return <div key={`message${new Date().getTime()}${index}`}>
-                                <MessageBubble params={msgObj} />
-                                {index === props.messageData.length - 1 ?
-                                    <QuickReply handleButtonClick={(data) => props.handleButtonClick(data)} options={msgObj} />
-                                    : ""}
-                            </div>
-                        }
-                        else if (msgObj.type === "hyperLink") {
-                            return <div key={`message${new Date().getTime()}${index}`}>
-                                <MessageBubble params={msgObj} />
-                                <Hyperlink handleButtonClick={(data) => props.handleButtonClick(data)} options={msgObj} />
-                            </div>
-                        }
-                        else if (msgObj.type === "date") {
-                            return <div key={`message${new Date().getTime()}${index}`}>
-                                <MessageBubble params={msgObj} />
-                                {index === props.messageData.length - 1 ?
-                                    <div style={{ marginBottom: "12px" }}>
-                                        <Calendar calendarType="US" onChange={setDate} />
-                                    </div> : ""}
-                            </div>
-                        }
-                        else if (msgObj.type === "cardCarousel") {
-                            return <div key={`message${new Date().getTime()}${index}`}>
-                                <MessageBubble params={msgObj} />
-                                {index === props.messageData.length - 1 ?
-                                    <CardCarousel params={msgObj} handleButtonClick={(data) => props.handleButtonClick(data)}/> 
-                                    : ""}
-                            </div>
-                        }
-                        return <div key={`message${new Date().getTime()}${index}`}>
-                            {<MessageBubble params={msgObj} />}
+                    props.messageData && props.messageData.map((msgObj, i) => {
+                        return <div key={`message${new Date().getTime()}${i}`}>
+                            <TitleText params={msgObj} />
+                            {"followText" in msgObj ? msgObj.followText.map(ft => generateFollowText(ft, i)) : ""}
                         </div>
                     })
                 }
@@ -70,5 +72,8 @@ function Conversation(props) {
         </main>
     );
 }
+
+
+
 
 export default Conversation;

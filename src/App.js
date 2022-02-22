@@ -2,20 +2,22 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import ChatWindow from './components/ChatWindow'
 import ChatIcon from "./components/ChatIcon";
-import { botWelcomeMessage, conversations, generateBotResponse } from "./dataProvider/sampleData";
+import { conversations } from "./dataProvider/sampleData";
+import generateBotResponse from './models/botResponse';
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   const [openChatWindow, setOpenChatWindow] = useState(false);
-	const [messageLoader, setMessageLoader] = useState(false);
+  const [messageLoader, setMessageLoader] = useState(false);
 
   useEffect(() => {
     if (openChatWindow) {
       setTimeout(function () {
         console.log("loading chat history if any");
         setIsConnected(true);   // fetch the conversation data from the database, set true if success else false
-        if (chatHistory.length === 0) setChatHistory(botWelcomeMessage);   // set the conversation data
+        const welcomeMessage = generateBotResponse(conversations("welcome"));
+        if (chatHistory.length === 0) setChatHistory([...chatHistory, welcomeMessage]);   // set the conversation data
       }, 500);
     }
   }, [openChatWindow]);
@@ -23,11 +25,11 @@ function App() {
   function handleUserMessage(userResponse) {
     setMessageLoader(true);
     appendMessage(userResponse);
-    botResponse(userResponse.data.text);
+    botResponse(userResponse.text);
   }
 
   function appendMessage(message) {
-    console.log("appending message to chathistory", message);
+    console.log("appending message to chathistory");
     setChatHistory(oldData => [...oldData, message]);
   }
 
@@ -38,7 +40,7 @@ function App() {
   function botResponse(userMsg) {
     const botResp = generateBotResponse(conversations(userMsg.toLowerCase()));
     const delay = 500;
-    
+
     setTimeout(() => {
       appendMessage(botResp);
       setMessageLoader(false);

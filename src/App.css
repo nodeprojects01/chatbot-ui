@@ -151,8 +151,8 @@ body {
 }
 
 .chat-bubble {
-  min-width: 60px;
-	max-width: 700px;
+  min-width: 125px;
+	max-width: 90%;
   padding: 10px 12px;
   border-radius: var(--border-radius);
   background: var(--left-chat-bg);
@@ -173,8 +173,6 @@ body {
 
 .left-chat .chat-bubble {
   border-bottom-left-radius: 0;
-  width: 90%;
-  /* box-shadow: grey -1px 1px 10px; */
 }
 
 .right-chat {
@@ -184,9 +182,7 @@ body {
   background: var(--right-chat-bg);
   color: #fff;
   border-bottom-right-radius: 0;
-  width: 90%;
   float: right;
-  /* box-shadow: grey -1px 1px 10px; */
 }
 .right-chat .chat-img {
   margin: 0 0 0 10px;

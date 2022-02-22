@@ -1,20 +1,17 @@
-import MessageBubble from "../chatWindow/MessageBubble";
-
 
 function MultiLineText(props) {
-    const txtArr = props.params.data.text.split(" | ");
-    console.log("fist msg -", txtArr);
+    const sender = "sender" in props ? props.sender : "Bot";
+    let bubbleStyle = sender === "Me" ? "chat right-chat" : "chat left-chat";
+
     return (
-        <div key={`quickReplyBox${new Date().getTime()}`} className="quickReplyBox">
-            <li>
-			{txtArr.map((txt, index) => {
-				return <ul key={`qucikBtn${new Date().getTime()}${index}`} className="quickreplyBtn">
-					{txt}
-				</ul>
-			})}
-            </li>
-		</div>
-    );
+        <div key={`chat${new Date().getTime()}`} className={bubbleStyle}>
+            <div key={`msgBubble${new Date().getTime()}`} className="chat-bubble">
+                <div key={`msgText${new Date().getTime()}`} className="chat-text">
+                    {props.options.map((txt, i) => <li key={`unli${new Date().getTime()}${i}`}>{txt.trim()}</li>)}
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default MultiLineText;

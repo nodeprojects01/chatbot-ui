@@ -10,7 +10,7 @@ function Footer(props) {
         }}>
             <input type="text" value={userMessage} onChange={(e) => setUserMessage(e.target.value)}
                 className="messenger-input" placeholder="Enter your message..." />
-            <div className="messenger-send-btn">Send</div>
+            <div className="messenger-send-btn" onClick={() => props.handleSubmit(userMessage)}>Send</div>
         </form>
     );
 }

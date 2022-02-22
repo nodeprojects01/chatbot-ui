@@ -22,9 +22,7 @@ function ChatWindow(props) {
 			sender: "Me",
 			timestamp: formatDate(new Date()),
 			type: "plainText",
-			data: {
-				text: msg
-			},
+			text: msg
 		});
 	}
 
