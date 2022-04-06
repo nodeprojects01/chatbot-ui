@@ -16,8 +16,14 @@ function App() {
       setTimeout(function () {
         console.log("loading chat history if any");
         setIsConnected(true);   // fetch the conversation data from the database, set true if success else false
-        const welcomeMessage = generateBotResponse(conversations("welcome"));
-        if (chatHistory.length === 0) setChatHistory([...chatHistory, welcomeMessage]);   // set the conversation data
+        conversations("welcome").then(res => {
+          const welcomeMessage = generateBotResponse(res);
+          console.log("welcome message > ", welcomeMessage);
+          if (chatHistory.length === 0) setChatHistory([...chatHistory, welcomeMessage]);   // set the conversation data
+        }).catch(e => {
+          console.log("error while setting the conversations >", e);
+        });
+
       }, 500);
     }
   }, [openChatWindow]);
@@ -25,7 +31,18 @@ function App() {
   function handleUserMessage(userResponse) {
     setMessageLoader(true);
     appendMessage(userResponse);
-    botResponse(userResponse.text);
+    // botResponse(userResponse.text);
+    conversations(userResponse.text.toLowerCase()).then(res => {
+      const botResp = generateBotResponse(res);
+      const delay = 500;
+
+      setTimeout(() => {
+        appendMessage(botResp);
+        setMessageLoader(false);
+      }, delay);
+    }).catch(e => {
+      console.log("error while setting the conversations >", e);
+    });
   }
 
   function appendMessage(message) {
@@ -38,13 +55,18 @@ function App() {
   }
 
   function botResponse(userMsg) {
-    const botResp = generateBotResponse(conversations(userMsg.toLowerCase()));
-    const delay = 500;
+    conversations(userMsg.toLowerCase()).then(res => {
+      const botResp = generateBotResponse(res);
+      const delay = 500;
 
-    setTimeout(() => {
-      appendMessage(botResp);
-      setMessageLoader(false);
-    }, delay);
+      setTimeout(() => {
+        appendMessage(botResp);
+        setMessageLoader(false);
+      }, delay);
+    }).catch(e => {
+      console.log("error while setting the conversations >", e);
+    });
+
   }
 
   function handleMinimizeWindow() {

@@ -7,6 +7,7 @@ export const themes = {
 		--left-chat-bg: #e0e6df;
 		--right-chat-bg: #48A14D;
 		--left-chat-border: #e0e6df;
+		--left-chat-bg-hover: #e3e4e5;
 		--chatwindowheight: 650px;
 	`,
 	blue: `
@@ -28,6 +29,7 @@ export const themes = {
 		--left-chat-bg: #fee8e7;
 		--right-chat-bg: #f44336;
 		--left-chat-border: #fbbbb6;
+		--left-chat-bg-hover: #e3e4e5;
 		--chatwindowheight: 650px;
 	`,
 	orange: `
@@ -38,6 +40,7 @@ export const themes = {
 		--left-chat-bg: #f3e9da;
 		--right-chat-bg: #ff9800;
 		--left-chat-border: #ffe0b3;
+		--left-chat-bg-hover: #e3e4e5;
 		--chatwindowheight: 650px;
    `
 }

@@ -1,7 +1,20 @@
 
 const responseTypes = require("../models/responseTypes");
+const axios = require('axios');
 
-const conversations = (text) => {
+async function conversations (text) {
+    console.log("calling backend framework -", text)
+    const resp = await axios.post('/getQueryResponse', {
+        query: text
+    }).then(function (response) {
+        return response;
+    }).catch(function (error) {
+        return error;
+    });
+    return resp;
+}
+
+const conversations_test = (text) => {
     switch (text) {
         case "welcome": return {
             type: responseTypes.plainText,
@@ -114,7 +127,7 @@ const conversations = (text) => {
 
         case "puerto rico efile": return {
             type: responseTypes.plainText,
-            text: "What is the eFile type?",
+            text: "Please select the start date",
             followText: [
                 {
                     type: responseTypes.date
