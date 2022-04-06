@@ -1,11 +1,11 @@
 
 const responseTypes = {
-    quickReply: "quickReply",
-    plainText: "plainText",
-    hyperLink: "hyperLink",
-    date: "date",
-    multiLine: "multiLine",
-    cardCarousel: "cardCarousel"
+    quickReply: "QuickReply",
+    plainText: "PlainText",
+    hyperLink: "HyperLink",
+    date: "Date",
+    multiLine: "MultiLine",
+    cardCarousel: "CardCarousel"
 }
 
 module.exports = responseTypes

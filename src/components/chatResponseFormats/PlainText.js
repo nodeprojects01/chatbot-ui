@@ -3,8 +3,9 @@
 function PlainText(props) {
     const sender = "sender" in props ? props.sender : "Bot";
     let bubbleStyle = sender === "Me" ? "chat right-chat" : "chat left-chat";
-    let length = props.text.split(" ").length;
-    const textLines = props.text.split("\n\n");
+    console.log("plain text >", props);
+    let length = props.message.split(" ").length;
+    const textLines = props.message.split("\n\n");
     
     return (
         <div key={`chat${new Date().getTime() * length}`} className={bubbleStyle}>

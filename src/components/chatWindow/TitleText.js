@@ -1,13 +1,14 @@
-import PlainText from "../chatResponseFormats/PlainText";
+
 // import BotIcon from "../../images/icons/boticon.png";
 // import UserIcon from "../../images/icons/usericon.png";
 // <img src={BotIcon} style={{ width: "20px", height: "20px" }} /> 
 // <img src={UserIcon} style={{ width: "20px", height: "20px" }} />
 
 function TitleText(props) {
+    console.log("TitleText -", props);
     let bubbleStyle = props.params.sender === "Me" ? "chat right-chat" : "chat left-chat";
-    let length = props.params.text.split(" ").length;
-    const textLines = props.params.text.split("\n\n");
+    let length = props.params.message.split(" ").length;
+    const textLines = props.params.message.split("\n\n");
     
     return (
         <div key={`chat${new Date().getTime() * length}`} className={bubbleStyle}>

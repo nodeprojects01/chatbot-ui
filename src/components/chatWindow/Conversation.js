@@ -27,7 +27,8 @@ function Conversation(props) {
     }
 
     function generateFollowText(ft, i) {
-        switch (ft.type) {
+        console.log("generateFollowText  >>", ft, i);
+        switch (ft.messageType) {
             case responseTypes.quickReply:
                 return i === props.messageData.length - 1 ?
                     <QuickReply handleButtonClick={(data) => props.handleButtonClick(data)} options={ft.options} />
@@ -51,7 +52,7 @@ function Conversation(props) {
                 return <MultiLineText handleButtonClick={(data) => props.handleButtonClick(data)} options={ft.options} />
 
             default:
-                return <PlainText text={ft.text} />
+                return <PlainText text={ft.message} />
         }
     }
 
@@ -59,11 +60,13 @@ function Conversation(props) {
     return (
         <main className="messenger-chat" >
             <div id="printme">
+                {console.log("Conversation props.messageData >>", props.messageData.length, props.messageData)}
                 {
                     props.messageData && props.messageData.map((msgObj, i) => {
+                        console.log("Conversation inloop msgObj >>", msgObj);
                         return <div key={`message${new Date().getTime()}${i}`}>
                             <TitleText params={msgObj} />
-                            {"followText" in msgObj ? msgObj.followText.map(ft => generateFollowText(ft, i)) : ""}
+                            {"followMessage" in msgObj ? msgObj.followMessage.map(ft => generateFollowText(ft, i)) : ""}
                         </div>
                     })
                 }

@@ -15,17 +15,17 @@ function getBotResponseTemplate() {
         transactionId: "",
         sender: "Bot",
         timestamp: "",
-        type: "",
-        text: "",
-        followText: []
+        messageType: "",
+        message: "",
+        followMessage: []
     }
 }
 
 function generateBotResponse(obj) {
     if (!obj) {
         obj = {
-            type: responseTypes.plainText,
-            text: sorryMessages[genericFunction.generateRandomNo(0, sorryMessages.length - 1)]
+            messageType: responseTypes.plainText,
+            message: sorryMessages[genericFunction.generateRandomNo(0, sorryMessages.length - 1)]
         }
     }
     let botResponse = getBotResponseTemplate();
@@ -34,9 +34,9 @@ function generateBotResponse(obj) {
     
     botResponse.transactionId = ts + shortUID.new();
     botResponse.timestamp = genericFunction.formatDate(date);
-    botResponse.type = obj.type ? obj.type : responseTypes.plainText;
-    botResponse.text = obj.text ? obj.text : "";
-    botResponse.followText = obj.followText ? obj.followText : [];
+    botResponse.messageType = obj.messageType ? obj.messageType : responseTypes.plainText;
+    botResponse.message = obj.message ? obj.message : "";
+    botResponse.followMessage = obj.followMessage ? obj.followMessage : [];
 
     console.log(botResponse);
     return botResponse;

@@ -17,8 +17,8 @@ function App() {
         console.log("loading chat history if any");
         setIsConnected(true);   // fetch the conversation data from the database, set true if success else false
         conversations("welcome").then(res => {
+          console.log("welcome res > ", res);
           const welcomeMessage = generateBotResponse(res);
-          console.log("welcome message > ", welcomeMessage);
           if (chatHistory.length === 0) setChatHistory([...chatHistory, welcomeMessage]);   // set the conversation data
         }).catch(e => {
           console.log("error while setting the conversations >", e);
@@ -32,7 +32,8 @@ function App() {
     setMessageLoader(true);
     appendMessage(userResponse);
     // botResponse(userResponse.text);
-    conversations(userResponse.text.toLowerCase()).then(res => {
+    conversations(userResponse.message.toLowerCase()).then(res => {
+      console.log("handleUserMessage res >> ", res);
       const botResp = generateBotResponse(res);
       const delay = 500;
 
@@ -56,6 +57,7 @@ function App() {
 
   function botResponse(userMsg) {
     conversations(userMsg.toLowerCase()).then(res => {
+      console.log("welcome res > ", res);
       const botResp = generateBotResponse(res);
       const delay = 500;
 

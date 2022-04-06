@@ -3,25 +3,28 @@ const responseTypes = require("../models/responseTypes");
 const axios = require('axios');
 
 async function conversations (text) {
-    console.log("calling backend framework -", text)
+    console.log("calling backend framework --", text)
     const resp = await axios.post('/getQueryResponse', {
         query: text
     }).then(function (response) {
-        return response;
+        console.log("backend responose >> ", response);
+        return response.data.data;
     }).catch(function (error) {
+        console.log("backend error >> ", error);
         return error;
     });
+    console.log("final function responose >> ", resp);
     return resp;
 }
 
 const conversations_test = (text) => {
     switch (text) {
         case "welcome": return {
-            type: responseTypes.plainText,
-            text: "Hi, I am Efia the chatbot assistant, and I can help you with the following queries",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "Hi, I am Efia the chatbot assistant, and I can help you with the following queries",
+            followMessage: [
                 {
-                    type: responseTypes.quickReply,
+                    messageType: responseTypes.quickReply,
                     options: [
                         {
                             title: 'Business Metrics Report',
@@ -52,18 +55,18 @@ const conversations_test = (text) => {
         case "hello":
         case "good morning":
         case "good afternoon": return {
-            type: responseTypes.plainText,
-            text: "Hello, how can I help you"
+            messageType: responseTypes.plainText,
+            message: "Hello, how can I help you"
         }
 
         case "help":
         case "how can you help":
         case "i need help": return {
-            type: responseTypes.plainText,
-            text: "Sure, I can help you with the following queries, click any one to begin!",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "Sure, I can help you with the following queries, click any one to begin!",
+            followMessage: [
                 {
-                    type: responseTypes.quickReply,
+                    messageType: responseTypes.quickReply,
                     options: [
                         {
                             title: 'Business Metrics Report',
@@ -93,11 +96,11 @@ const conversations_test = (text) => {
         case "download report":
         case "generate metrics report":
         case "business metrics report": return {
-            type: responseTypes.plainText,
-            text: "I found the following reports for you. Please select one to proceed.",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "I found the following reports for you. Please select one to proceed.",
+            followMessage: [
                 {
-                    type: responseTypes.quickReply,
+                    messageType: responseTypes.quickReply,
                     options: [
                         { title: "DocType Intgration Report", response: "DocType Intgration Report" },
                         { title: "eFile Usage Metrics", response: "eFile Usage Metrics" },
@@ -109,11 +112,11 @@ const conversations_test = (text) => {
 
         case "efile report":
         case "efile usage metrics": return {
-            type: responseTypes.plainText,
-            text: "What is the eFile type?",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "What is the eFile type?",
+            followMessage: [
                 {
-                    type: responseTypes.quickReply,
+                    messageType: responseTypes.quickReply,
                     options: [
                         { title: "US eFile", response: "US eFile" },
                         { title: "Canada eFile", response: "Canada eFile" },
@@ -126,32 +129,32 @@ const conversations_test = (text) => {
         }
 
         case "puerto rico efile": return {
-            type: responseTypes.plainText,
-            text: "Please select the start date",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "Please select the start date",
+            followMessage: [
                 {
-                    type: responseTypes.date
+                    messageType: responseTypes.date
                 }
             ]
         }
 
         case "01-01-2022": return {
-            type: responseTypes.plainText,
-            text: "Please select the end date",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "Please select the end date",
+            followMessage: [
                 {
-                    type: responseTypes.date
+                    messageType: responseTypes.date
                 }
             ]
 
         }
 
         case "31-01-2022": return {
-            type: responseTypes.plainText,
-            text: "Here is the eFile usage metrics report generated for 1-1-2022 to 31-1-2022",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "Here is the eFile usage metrics report generated for 1-1-2022 to 31-1-2022",
+            followMessage: [
                 {
-                    type: responseTypes.hyperLink,
+                    messageType: responseTypes.hyperLink,
                     options: [
                         { title: "Download the file", link: "https://filesamples.com/samples/document/csv/sample4.csv" }
                     ]
@@ -160,11 +163,11 @@ const conversations_test = (text) => {
         }
 
         case "download puerto rico usage metrics for 1st jan 2022 to 31st jan 2022": return {
-            type: responseTypes.plainText,
-            text: "Here is the eFile usage metrics report generated for 1-1-2022 to 31-1-2022",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "Here is the eFile usage metrics report generated for 1-1-2022 to 31-1-2022",
+            followMessage: [
                 {
-                    type: responseTypes.hyperLink,
+                    messageType: responseTypes.hyperLink,
                     options: [
                         { title: "Download the file", link: "https://filesamples.com/samples/document/csv/sample4.csv" }
                     ]
@@ -175,11 +178,11 @@ const conversations_test = (text) => {
         case "how to use dfc?":
         case "user guide":
         case "how to use the tool": return {
-            type: responseTypes.plainText,
-            text: "Click the below link to navigate to eFile user guide",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "Click the below link to navigate to eFile user guide",
+            followMessage: [
                 {
-                    type: responseTypes.hyperLink,
+                    messageType: responseTypes.hyperLink,
                     options: [
                         { title: "Navigate me", link: "https://google.com" }
                     ]
@@ -189,49 +192,49 @@ const conversations_test = (text) => {
 
         case "where can i upload my health checkup report":
         case "under which category do i upload my health checkup report?": return {
-            type: responseTypes.plainText,
-            text: "You can upload the health reports under below category. \n\n Medical > Miscellaneous Medical Document"
+            messageType: responseTypes.plainText,
+            message: "You can upload the health reports under below category. \n\n Medical > Miscellaneous Medical Document"
         }
 
         case "how to search payroll related documents":
         case "how to search payroll related documents of roman reigns": return {
-            type: responseTypes.plainText,
-            text: "Here is how you can find payroll documents of an associate",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "Here is how you can find payroll documents of an associate",
+            followMessage: [
                 {
-                    type: responseTypes.multiLine,
+                    messageType: responseTypes.multiLine,
                     options: ["Go to eFile Homepage", "Enter the userid or username in the textbot and hit search", "Click on Payroll folder from the left panel"]
                 }
             ]
         }
 
         case "check if 234441123 has uploaded the experience certificate": return {
-            type: responseTypes.plainText,
-            text: "I can see the experience certificate of j0k07az available under the following path. \n\n Payroll > Previous Job Documents"
+            messageType: responseTypes.plainText,
+            message: "I can see the experience certificate of j0k07az available under the following path. \n\n Payroll > Previous Job Documents"
         }
 
         case "find document":
         case "download a document": return {
-            type: responseTypes.plainText,
-            text: "please provide the store number"
+            messageType: responseTypes.plainText,
+            message: "please provide the store number"
         }
 
         case "02548": return {
-            type: responseTypes.plainText,
-            text: "please provide the user id of the associate whose document you want to download"
+            messageType: responseTypes.plainText,
+            message: "please provide the user id of the associate whose document you want to download"
         }
 
         case "j0k07az": return {
-            type: responseTypes.plainText,
-            text: "please provide the document name you are looking for"
+            messageType: responseTypes.plainText,
+            message: "please provide the document name you are looking for"
         }
 
         case "address proof": return {
-            type: responseTypes.plainText,
-            text: "Please find the address proof document of j0k07az to download",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "Please find the address proof document of j0k07az to download",
+            followMessage: [
                 {
-                    type: responseTypes.hyperLink,
+                    messageType: responseTypes.hyperLink,
                     options: [
                         { title: "Download the file", link: "https://filesamples.com/samples/document/csv/sample4.csv" }
                     ]
@@ -240,11 +243,11 @@ const conversations_test = (text) => {
         }
 
         case "download the address proof of j0k07az of store number 02548": return {
-            type: responseTypes.plainText,
-            text: "Please find the address proof document of j0k07az to download",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "Please find the address proof document of j0k07az to download",
+            followMessage: [
                 {
-                    type: responseTypes.hyperLink,
+                    messageType: responseTypes.hyperLink,
                     options: [
                         { title: "Download the file", link: "https://filesamples.com/samples/document/csv/sample4.csv" }
                     ]
@@ -254,17 +257,17 @@ const conversations_test = (text) => {
 
         case "card":
         case "type of documents": return {
-            type: responseTypes.plainText,
-            text: "Please find the list of documents available for the associate j0k07az",
-            followText: [
+            messageType: responseTypes.plainText,
+            message: "Please find the list of documents available for the associate j0k07az",
+            followMessage: [
                 {
-                    type: responseTypes.cardCarousel,
+                    messageType: responseTypes.cardCarousel,
                     options: [
                         {
                             title: "I am Card 1",
                             subititle: "I am Subtitle",
                             media: {
-                                type: "image",
+                                messageType: "image",
                                 url: "https://image.flaticon.com/icons/svg/145/145867.svg",
                             },
                             buttons: [
@@ -286,7 +289,7 @@ const conversations_test = (text) => {
                             title: "I am Card 2",
                             subititle: "I am Subtitle",
                             media: {
-                                type: "image",
+                                messageType: "image",
                                 url: "https://image.flaticon.com/icons/svg/145/145867.svg",
                             },
                             buttons: [

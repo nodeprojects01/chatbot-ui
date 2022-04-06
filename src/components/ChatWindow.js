@@ -16,13 +16,12 @@ function formatDate(date) {
 }
 
 function ChatWindow(props) {
-
 	function handleUserMessage(msg) {
 		props.handleUserResponse({
 			sender: "Me",
 			timestamp: formatDate(new Date()),
-			type: "plainText",
-			text: msg
+			messageType: "plainText",
+			message: msg
 		});
 	}
 
