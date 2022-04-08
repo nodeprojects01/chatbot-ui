@@ -3,17 +3,15 @@ const responseTypes = require("../models/responseTypes");
 const axios = require('axios');
 
 async function conversations (text) {
-    console.log("calling backend framework --", text)
     const resp = await axios.post('/getQueryResponse', {
         query: text
     }).then(function (response) {
-        console.log("backend responose >> ", response);
+        // console.log("backend responose >> ", response);
         return response.data.data;
     }).catch(function (error) {
         console.log("backend error >> ", error);
         return error;
     });
-    console.log("final function responose >> ", resp);
     return resp;
 }
 
@@ -102,7 +100,7 @@ const conversations_test = (text) => {
                 {
                     messageType: responseTypes.quickReply,
                     options: [
-                        { title: "DocType Intgration Report", response: "DocType Intgration Report" },
+                        { title: "DocType Inetgration Report", response: "DocType Integration Report" },
                         { title: "eFile Usage Metrics", response: "eFile Usage Metrics" },
                         { title: "UPLD & DNLD Report", response: "UPLD & DNLD Report" }
                     ]
