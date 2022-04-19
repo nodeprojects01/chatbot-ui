@@ -2,11 +2,12 @@
 const responseTypes = require("../models/responseTypes");
 const axios = require('axios');
 
+
 async function conversations (text) {
     const resp = await axios.post('/getQueryResponse', {
         query: text
     }).then(function (response) {
-        // console.log("backend responose >> ", response);
+        console.log("backend responose >> ", response);
         return response.data.data;
     }).catch(function (error) {
         console.log("backend error >> ", error);
@@ -22,7 +23,7 @@ const conversations_test = (text) => {
             message: "Hi, I am Efia the chatbot assistant, and I can help you with the following queries",
             followMessage: [
                 {
-                    messageType: responseTypes.quickReply,
+                    messageType: responseTypes.quickReplies,
                     options: [
                         {
                             title: 'Business Metrics Report',
@@ -64,7 +65,7 @@ const conversations_test = (text) => {
             message: "Sure, I can help you with the following queries, click any one to begin!",
             followMessage: [
                 {
-                    messageType: responseTypes.quickReply,
+                    messageType: responseTypes.quickReplies,
                     options: [
                         {
                             title: 'Business Metrics Report',
@@ -98,7 +99,7 @@ const conversations_test = (text) => {
             message: "I found the following reports for you. Please select one to proceed.",
             followMessage: [
                 {
-                    messageType: responseTypes.quickReply,
+                    messageType: responseTypes.quickReplies,
                     options: [
                         { title: "DocType Inetgration Report", response: "DocType Integration Report" },
                         { title: "eFile Usage Metrics", response: "eFile Usage Metrics" },
@@ -114,7 +115,7 @@ const conversations_test = (text) => {
             message: "What is the eFile type?",
             followMessage: [
                 {
-                    messageType: responseTypes.quickReply,
+                    messageType: responseTypes.quickReplies,
                     options: [
                         { title: "US eFile", response: "US eFile" },
                         { title: "Canada eFile", response: "Canada eFile" },

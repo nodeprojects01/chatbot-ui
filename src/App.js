@@ -16,14 +16,16 @@ function App() {
       setTimeout(function () {
         console.log("loading chat history if any");
         setIsConnected(true);   // fetch the conversation data from the database, set true if success else false
-        conversations("welcome").then(res => {
-          console.log("welcome res > ", res);
-          const welcomeMessage = generateBotResponse(res);
-          if (chatHistory.length === 0) setChatHistory([...chatHistory, welcomeMessage]);   // set the conversation data
-        }).catch(e => {
-          console.log("error while setting the conversations >", e);
-        });
-
+        if (chatHistory.length === 0) {
+          conversations("welcome").then(res => {
+            console.log("welcome res > ", res);
+            const welcomeMessage = generateBotResponse(res);
+            console.log("welcomeMessage > ", welcomeMessage);
+            setChatHistory([...chatHistory, welcomeMessage]);   // set the conversation data
+          }).catch(e => {
+            console.log("error while setting the conversations >", e);
+          });
+        }
       }, 500);
     }
   }, [openChatWindow]);

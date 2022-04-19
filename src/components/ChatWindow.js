@@ -26,12 +26,13 @@ function ChatWindow(props) {
 	}
 
 	function handleButtonClick(data) {
+		console.log("handleButtonClick >", data);
 		switch (data.action) {
 			case "hyperLink":
 				if (data.link) window.open(data.link, "_blank")
 				break;
-			case "quickReply":
-				if (data.response) handleUserMessage(data.response);
+			case "quickReplies":
+				if (data.actualMessage) handleUserMessage(data.actualMessage);
 				break;
 			case "date":
 				if (data.date) handleUserMessage(data.date);

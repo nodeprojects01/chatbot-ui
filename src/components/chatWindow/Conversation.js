@@ -29,7 +29,7 @@ function Conversation(props) {
     function generateFollowText(ft, i) {
         console.log("generateFollowText  >>", ft, i);
         switch (ft.messageType) {
-            case responseTypes.quickReply:
+            case responseTypes.quickReplies:
                 return i === props.messageData.length - 1 ?
                     <QuickReply handleButtonClick={(data) => props.handleButtonClick(data)} options={ft.options} />
                     : ""

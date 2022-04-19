@@ -1,6 +1,6 @@
 
 const responseTypes = {
-    quickReply: "QuickReply",
+    quickReplies: "QuickReplies",
     plainText: "PlainText",
     hyperLink: "HyperLink",
     date: "Date",
