@@ -1,11 +1,17 @@
 
 const responseTypes = require("../models/responseTypes");
 const axios = require('axios');
+const sessionManager = require("../stateManager/manageSession");
 
-
-async function conversations (text) {
+async function conversations(text) {
     const resp = await axios.post('/getQueryResponse', {
+        userId: "testuser",
         query: text
+    }, {
+        headers: {
+            "conv-id": sessionManager.getConversationId(),
+            "trans-id": sessionManager.createTransactionId()
+        }
     }).then(function (response) {
         console.log("backend responose >> ", response);
         return response.data.data;

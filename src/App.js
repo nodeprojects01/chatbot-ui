@@ -4,6 +4,8 @@ import ChatWindow from './components/ChatWindow'
 import ChatIcon from "./components/ChatIcon";
 import { conversations } from "./dataProvider/sampleData";
 import generateBotResponse from './models/botResponse';
+const contextManager = require("./stateManager/manageSession");
+
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
@@ -54,6 +56,7 @@ function App() {
   }
 
   function handleChatIconClick() {
+    contextManager.createConversationId();
     setOpenChatWindow(!openChatWindow);
   }
 
@@ -74,6 +77,7 @@ function App() {
   }
 
   function handleMinimizeWindow() {
+    contextManager.getConversationId();
     setOpenChatWindow(false);
   }
 
