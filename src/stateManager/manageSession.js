@@ -2,7 +2,7 @@ const uid = require("./uniqueId");
 
 function createConversationId() {
     // Save data to sessionStorage
-    sessionStorage.setItem('convId', uid.createNewUniqueId());
+    sessionStorage.setItem('convId', uid.createUniqueId());
 }
 
 function getConversationId() {
@@ -13,7 +13,7 @@ function getConversationId() {
 }
 
 function createTransactionId() {
-    return uid.createNewUniqueId();
+    return uid.createUniqueId();
 }
 
 function removeSessionId(key) {

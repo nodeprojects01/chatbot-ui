@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 
-function createNewUniqueId() {
+function createUniqueId() {
     return crypto.randomBytes(16).toString("hex");
 }
 
-module.exports = { createNewUniqueId };
+module.exports = { createUniqueId };
