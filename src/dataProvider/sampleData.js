@@ -4,13 +4,17 @@ const axios = require('axios');
 const sessionManager = require("../stateManager/manageSession");
 
 async function conversations(text) {
+    const convPrevState = sessionManager.getPreviousState();
+    console.log("convPrevState --", convPrevState);
     const resp = await axios.post('/getQueryResponse', {
         userId: "testuser",
-        query: text
+        query: text,
+        sessionAttributes: convPrevState?.sessionAttributes ? convPrevState.sessionAttributes : {},
+        previousIntentSummary: convPrevState?.previousIntentSummary ? convPrevState.previousIntentSummary : {},
     }, {
         headers: {
-            "conv-id": sessionManager.getConversationId(),
-            "trans-id": sessionManager.createTransactionId()
+            "convid": sessionManager.getConversationId(),
+            "transid": sessionManager.createTransactionId()
         }
     }).then(function (response) {
         console.log("backend responose >> ", response);
@@ -22,7 +26,7 @@ async function conversations(text) {
     return resp;
 }
 
-const conversations_test = (text) => {
+const conversations_test = async (text) => {
     switch (text) {
         case "welcome": return {
             messageType: responseTypes.plainText,

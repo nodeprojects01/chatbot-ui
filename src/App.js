@@ -20,7 +20,8 @@ function App() {
         setIsConnected(true);   // fetch the conversation data from the database, set true if success else false
         if (chatHistory.length === 0) {
           conversations("welcome").then(res => {
-            console.log("welcome res > ", res);
+            console.log("welcome res obj > ", res);
+            contextManager.cachePreviousState(res);
             const welcomeMessage = generateBotResponse(res);
             console.log("welcomeMessage > ", welcomeMessage);
             setChatHistory([...chatHistory, welcomeMessage]);   // set the conversation data
@@ -36,6 +37,7 @@ function App() {
     setMessageLoader(true);
     appendMessage(userResponse);
     // botResponse(userResponse.text);
+    console.log("starting second and third conversations -----********* -------");
     conversations(userResponse.message.toLowerCase()).then(res => {
       console.log("handleUserMessage res >> ", res);
       const botResp = generateBotResponse(res);
